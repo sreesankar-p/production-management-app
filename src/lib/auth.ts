@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -32,12 +32,12 @@ export function getTokenFromRequest(req: NextApiRequest): string | null {
   return null;
 }
 
-export function setAuthCookie(res: any, token: string): void {
+export function setAuthCookie(res: NextApiResponse, token: string): void {
   res.setHeader('Set-Cookie', [
     `token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${30 * 24 * 60 * 60}`,
   ]);
 }
 
-export function clearAuthCookie(res: any): void {
+export function clearAuthCookie(res: NextApiResponse): void {
   res.setHeader('Set-Cookie', 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
 }
