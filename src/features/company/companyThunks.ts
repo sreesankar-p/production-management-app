@@ -225,7 +225,7 @@ export const updateCompanyDetails = (
 };
 
 
-export const deleteCompany = (companyId: string) => async (dispatch: AppDispatch) => {
+ export  const deleteCompany = (companyId: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await fetch(`/api/companies/${companyId}`, {
             method: 'DELETE',
@@ -305,3 +305,4 @@ export const updateOfferDetails = (
         throw error;
     }
 };
+
