@@ -36,6 +36,7 @@ export default async function handler(
       email: user.email,
     });
   } catch (error) {
+    console.error(error)
     return res.status(500).json({ message: 'Server error' });
   }
 }
