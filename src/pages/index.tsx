@@ -1,18 +1,16 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/lib/store';
 
-export default function Home() {
-  const router = useRouter();
-  const { isAuthenticated } = useSelector((state: any) => state.auth);
+export default function HomePage() {
+  // const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    } else {
-      router.push('/auth/login');
-    }
-  }, [isAuthenticated, router]);
+  // if (!isAuthenticated) return null;
 
-  return null;
+  return (
+    <div className="bg-gray-700 flex flex-col items-center">
+      <h1 className='bg-amber-300 text-black m-5 p-5 text-center'>Welcome to Production Management</h1>
+      <p className='items-center w-fit bg-amber-200 m-5 text-amber-950 text-center w '>This is the homepage content</p>
+    </div>
+  );
 }
