@@ -1,11 +1,13 @@
-import React from 'react';
+// pages/p1/dashboard.tsx
+import Layout from '../../components/Layout';
+import Dashboard from "@/components/Dashboard";
 
-const dashboard = () => {
+export default function DashboardPage() {
     return (
-        <div className='flex justify-center items-center'>
-            <h1 className='text-green-400 text-center'>Welcome to dashboard</h1>
-        </div>
+        
+        <Layout>
+            <Dashboard />
+        </Layout>
+        
     );
 }
-
-export default dashboard;

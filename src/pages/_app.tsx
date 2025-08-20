@@ -1,18 +1,21 @@
+//pages/_app.tsx
+
 import { Provider } from 'react-redux';
 import { store } from '@/lib/store';
 import type { AppProps } from 'next/app';
-import Navbar from '@/components/Navbar';
+// import Navbar from '@/components/Navbar';
 import '@/styles/globals.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/lib/store';
+import Head from 'next/head'
 
 function AuthChecker({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(true);
-  
+
   // List of public routes that don't require authentication
   const publicRoutes = ['/auth/login', '/auth/register', '/'];
   const isPublicRoute = publicRoutes.includes(router.pathname);
@@ -33,7 +36,7 @@ function AuthChecker({ children }: { children: React.ReactNode }) {
         router.push('/');
       }
     }
-    
+
     setLoading(false);
   }, [isAuthenticated, isPublicRoute, router]);
 
@@ -44,16 +47,17 @@ function AuthChecker({ children }: { children: React.ReactNode }) {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <div className="min-h-screen bg-gray-100">
-        <Navbar />
-        <main className="py-6 px-4 sm:px-6 lg:px-8">
-          {/* <AuthChecker> */}
-            <Component {...pageProps} />
-          {/* </AuthChecke r> */}
-        </main>
-      </div>
-    </Provider>
+
+    <>
+      <Head>
+        <title>Shree Green Consultants</title>
+      </Head>
+      <Provider store={store}>
+        {/* <AuthChecker> */}
+        <Component {...pageProps} />
+        {/* </AuthChecker> */}
+      </Provider>
+    </>
   );
 }
 
