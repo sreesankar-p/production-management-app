@@ -46,6 +46,16 @@ export const registerUser = createAsyncThunk(
 );
 
 // Add other auth-related thunks as needed
-export const logoutUser = createAsyncThunk('auth/logout', async () => {
+export const logoutUser = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   // Add logout logic here
+  try {
+    const response = await fetch("/api/auth/logout", { method: "POST" });
+    if (!response.ok) throw new Error(await response.text());
+    return await response.json();
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "Logout failed"
+    );
+  }
+
 });

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loginUser, registerUser } from '@/features/auth/authThunk';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
+import type { AppDispatch } from '@/lib/store';
 
 
 interface AuthFormProps {
@@ -12,7 +13,7 @@ interface AuthFormProps {
 
 export default function AuthForm({ isLogin }: AuthFormProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
 

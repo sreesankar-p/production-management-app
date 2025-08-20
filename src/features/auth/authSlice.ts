@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { loginUser, registerUser, logoutUser } from "./authThunk";
+
 interface User {
     _id: string;
     name: string;
@@ -41,6 +43,22 @@ const authSlice = createSlice({
             state.user = null;
             state.isAuthenticated = false
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null
+            })
+            .addCase(registerUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+                state.isAuthenticated = true;
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
     }
 })
 
