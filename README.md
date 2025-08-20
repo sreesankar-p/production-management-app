@@ -36,11 +36,11 @@ A modern, responsive web application for managing production workflows, companie
   
   npm install
 
-   # or
+   #or
 
    yarn install
  
-  # or
+  #or
  
    pnpm install
 
