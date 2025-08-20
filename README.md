@@ -46,5 +46,16 @@ A modern, responsive web application for managing production workflows, companie
 
 3. **Environment Variables**
  Create a .env.local file in the root directory:
- NEXT_PUBLIC_API_URL=your_api_url_here
- NEXT_PUBLIC_APP_URL=http://localhost:3000
+   NEXT_PUBLIC_API_URL=your_api_url_here
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+4. **Run the development server**
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+
+5. **Open your browser**
+ Navigate to http://localhost:3000
+
