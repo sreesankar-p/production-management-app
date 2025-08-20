@@ -33,36 +33,41 @@ A modern, responsive web application for managing production workflows, companie
    ```
 
 2. **Install dependencies**
-  
-  npm install
 
-   #or
+npm install
 
-   yarn install
- 
-  #or
- 
-   pnpm install
+#or
+
+yarn install
+
+#or
+
+pnpm install
 
 3. **Environment Variables**
- 
- Create a .env.local file in the root directory:
+
+Create a .env.local file in the root directory:
+
 ```bash
    NEXT_PUBLIC_API_URL=your_api_url_here
    NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 4. **Run the development server**
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
+   npm run dev
+   #or
+   yarn dev
+   #or
+   pnpm dev
 
 5. **Open your browser**
+
+```bash
  Navigate to http://localhost:3000
+```
 
 ## 🏗️ Project Structure
+
 ```bash
 src/
 ├── components/          # Reusable UI components
@@ -89,10 +94,18 @@ src/
 
 The app uses JWT-based authentication with HTTP-only cookies for security.
 
-Login Flow:
- 1. User submits credentials via AuthForm
- 2. Server validates and returns JWT token
- 3. Token stored in HTTP-only cookie
- 4. Redux store updates with user data
- 5. Protected routes are accessible  
- 
+**Login Flow:**
+
+1.  User submits credentials via AuthForm
+2.  Server validates and returns JWT token
+3.  Token stored in HTTP-only cookie
+4.  Redux store updates with user data
+5.  Protected routes are accessible
+
+**Protected Routes:**
+
+1. Dashboard (/p1/dashboard)
+2. Companies (/companies)
+3. User profile and settings
+
+
