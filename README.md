@@ -45,9 +45,12 @@ A modern, responsive web application for managing production workflows, companie
    pnpm install
 
 3. **Environment Variables**
+ 
  Create a .env.local file in the root directory:
+```bash
    NEXT_PUBLIC_API_URL=your_api_url_here
    NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
 4. **Run the development server**
     npm run dev
@@ -82,7 +85,7 @@ src/
 └── styles/            # Global styles
 ```
 
-🔐 Authentication
+## 🔐 Authentication
 
 The app uses JWT-based authentication with HTTP-only cookies for security.
 
