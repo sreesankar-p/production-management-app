@@ -60,7 +60,7 @@ A modern, responsive web application for managing production workflows, companie
  Navigate to http://localhost:3000
 
 ## 🏗️ Project Structure
-
+```bash
 src/
 ├── components/          # Reusable UI components
 │   ├── AuthForms.tsx   # Login/Signup forms
@@ -80,7 +80,7 @@ src/
 │   ├── companies/     # Companies management
 │   └── api/           # API routes
 └── styles/            # Global styles
-
+```
 
 🔐 Authentication
 
