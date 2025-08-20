@@ -59,3 +59,37 @@ A modern, responsive web application for managing production workflows, companie
 5. **Open your browser**
  Navigate to http://localhost:3000
 
+🏗️ Project Structure
+
+src/
+├── components/          # Reusable UI components
+│   ├── AuthForms.tsx   # Login/Signup forms
+│   ├── Dashboard.tsx   # Main dashboard component
+│   ├── Layout.tsx      # App layout with sidebar
+│   ├── Navbar.tsx      # Navigation header
+│   └── Sidebar.tsx     # Side navigation
+├── features/           # Redux feature slices
+│   └── auth/           # Authentication logic
+│       ├── authSlice.ts
+│       └── authThunk.ts
+├── lib/               # Utility libraries
+│   └── store.ts       # Redux store configuration
+├── pages/             # Next.js pages
+│   ├── auth/          # Authentication pages
+│   ├── dashboard/     # Dashboard page
+│   ├── companies/     # Companies management
+│   └── api/           # API routes
+└── styles/            # Global styles
+
+
+🔐 Authentication
+
+The app uses JWT-based authentication with HTTP-only cookies for security.
+
+Login Flow:
+ 1. User submits credentials via AuthForm
+ 2. Server validates and returns JWT token
+ 3. Token stored in HTTP-only cookie
+ 4. Redux store updates with user data
+ 5. Protected routes are accessible  
+ 
