@@ -59,7 +59,7 @@ A modern, responsive web application for managing production workflows, companie
 5. **Open your browser**
  Navigate to http://localhost:3000
 
-🏗️ Project Structure
+## 🏗️ Project Structure
 
 src/
 ├── components/          # Reusable UI components
