@@ -1,12 +1,12 @@
 // pages/indext.tsx
-// import { useSelector } from 'react-redux';
-// import type { RootState } from '@/lib/store';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/lib/store';
 import Navbar from '@/components/Navbar';
 
 export default function HomePage() {
-  // const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  // if (!isAuthenticated) return null;
+  if (!isAuthenticated) return null;
 
   return (
       <>

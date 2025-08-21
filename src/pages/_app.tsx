@@ -17,7 +17,7 @@ function AuthChecker({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   // List of public routes that don't require authentication
-  const publicRoutes = ['/auth/login', '/auth/register', '/'];
+  const publicRoutes = ['/auth/login', '/auth/signu', '/'];
   const isPublicRoute = publicRoutes.includes(router.pathname);
 
   useEffect(() => {
@@ -53,9 +53,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Shree Green Consultants</title>
       </Head>
       <Provider store={store}>
-        {/* <AuthChecker> */}
+        <AuthChecker>
         <Component {...pageProps} />
-        {/* </AuthChecker> */}
+        </AuthChecker>
       </Provider>
     </>
   );

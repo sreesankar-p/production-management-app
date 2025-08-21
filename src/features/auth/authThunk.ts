@@ -1,6 +1,6 @@
 // features/auth/authThunk.ts
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { AppDispatch, RootState } from '@/lib/store';
+// import type { AppDispatch, RootState } from '@/lib/store';
 
 interface LoginCredentials {
   email: string;
@@ -20,8 +20,10 @@ export const loginUser = createAsyncThunk(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),
       });
-      if (!response.ok) throw new Error(await response.text());
-      return await response.json();
+      const data = await response.json();
+      console.log("🔹 Login API Response: 👈 ", data);
+      if (!response.ok) throw new Error(data.message || 'Login failed');
+      return data;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Login failed');
     }

@@ -4,22 +4,23 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Bell, ChevronDown, Menu, X, User, LogOut } from "lucide-react"
 import { useState } from "react"
-import type { RootState } from '@/lib/store';
+import type { RootState, AppDispatch } from '@/lib/store';
 import Image from 'next/image';
+import { logoutUser } from '@/features/auth/authThunk';
 
 
 export function Navbar() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  console.log("userrr", user?.name)
+  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     try {
       document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      dispatch(logout());
+      dispatch(logoutUser());
       router.push('/auth/login');
     } catch (error) {
       console.error('Logout failed:', error);
@@ -76,7 +77,7 @@ export function Navbar() {
                   <div className="w-8 h-8 bg-green-600 rounded text-white text-sm font-medium flex items-center justify-center">
                     JM
                   </div>
-                  <span className="text-sm font-medium hidden md:inline-block mr-1">{user?.name || 'Account'}</span>
+                  <span className="text-sm font-medium hidden md:inline-block mr-1 text-gray-700">{user?.name || 'Account'}</span>
                   <ChevronDown className="w-4 h-4 text-gray-500" />
                 </button>
                 {isDropdownOpen && (
@@ -90,8 +91,8 @@ export function Navbar() {
                       </button>
                       <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         <LogOut className="mr-2 h-4 w-4" />
-                        Sign out              
-                     </button>
+                        Sign out
+                      </button>
                     </div>
                   </div>
                 )}
