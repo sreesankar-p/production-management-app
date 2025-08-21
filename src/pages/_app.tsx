@@ -3,13 +3,13 @@
 import { Provider } from 'react-redux';
 import { store } from '@/lib/store';
 import type { AppProps } from 'next/app';
-// import Navbar from '@/components/Navbar';
-import '@/styles/globals.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/lib/store';
 import Head from 'next/head'
+import Loading from '@/components/Loading';
+import '@/styles/globals.css';
 
 function AuthChecker({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -40,7 +40,7 @@ function AuthChecker({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }, [isAuthenticated, isPublicRoute, router]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading/>
 
   return <>{children}</>;
 }

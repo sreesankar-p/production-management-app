@@ -17,11 +17,13 @@ interface AuthState {
 }
 
 const savedAuth = typeof window !== "undefined" ? localStorage.getItem("auth") : null;
-const parsedAuth = savedAuth ? JSON.parse(savedAuth) : null;
+const parsedAuth: User | null = savedAuth ? JSON.parse(savedAuth) : null;
+
+
 
 const initialState: AuthState = {
-    user: parsedAuth?.user || null,
-    isAuthenticated: !!savedAuth,
+    user: parsedAuth,
+    isAuthenticated: !!parsedAuth,
     loading: false,
     error: null
 }
@@ -45,7 +47,7 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload.user;
+                state.user = action.payload;
                 state.isAuthenticated = true;
             })
             .addCase(registerUser.rejected, (state, action) => {
@@ -59,7 +61,9 @@ const authSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload.user;
+                state.user = action.payload;
+                // console.log("🔹 loginUser.fulfilled payload:", action.payload);
+
                 state.isAuthenticated = true;
 
                 // 🔹 persist to localStorage

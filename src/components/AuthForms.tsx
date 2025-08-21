@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, registerUser } from '@/features/auth/authThunk';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
-import type { AppDispatch } from '@/lib/store';
-
+import Loading from "@/components/Loading"
+import type { RootState, AppDispatch } from '@/lib/store';
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -15,7 +15,10 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { loading } = useSelector((state: RootState) => state.auth);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +26,7 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     try {
       if (isLogin) {
         await dispatch(loginUser({ email: formData.email, password: formData.password })).unwrap();
@@ -43,9 +46,11 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
         text: message,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="min-h-screen flex">
@@ -167,11 +172,11 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
             {/* Submit button */}
             <button
               type="submit"
-              disabled={loading}
-              className={`w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-400 to-blue-400 text-white font-semibold shadow-md hover:from-indigo-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition duration-200 flex items-center justify-center ${loading ? 'opacity-80' : ''
+              disabled={isLoading}
+              className={`w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-400 to-blue-400 text-white font-semibold shadow-md hover:from-indigo-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition duration-200 flex items-center justify-center ${isLoading ? 'opacity-80' : ''
                 }`}
             >
-              {loading ? (
+              {isLoading ? (
                 <>
                   <svg
                     className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"

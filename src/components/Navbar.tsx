@@ -14,7 +14,12 @@ export function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-  console.log("userrr", user?.name)
+
+  console.log("Redux auth state:", { isAuthenticated, user });
+
+  // const userData = localStorage.getItem("auth")
+  // console.log("user Data name : ",userData)
+  // console.log("userrr", user?.name)
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {

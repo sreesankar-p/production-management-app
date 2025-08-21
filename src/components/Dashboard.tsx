@@ -1,10 +1,15 @@
 //components/Dashboard.tsx
 
 import { Star, FileText, Receipt, TrendingUp, Download, Plus, ChevronLeft, ChevronRight } from "lucide-react"
-import Sidebar from "@/components/Sidebar"
-import Navbar from "@/components/navbar"
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/lib/store';
+import Loading from "./Loading";
+
 
 export default function Dashboard() {
+
+  const { loading } = useSelector((state: RootState) => state.auth);
+
   const offers = [
     { number: "SGC/2025/120", merchant: "Merchant A", date: "01/08/2025", status: "Approved" },
     { number: "SGC/2025/119", merchant: "Merchant B", date: "29/07/2025", status: "Pending Payment" },
@@ -47,6 +52,7 @@ export default function Dashboard() {
     }
   }
 
+  if (loading) return <Loading />
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* <Sidebar /> */}
