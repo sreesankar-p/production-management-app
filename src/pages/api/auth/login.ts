@@ -19,12 +19,12 @@ export default async function handler(
     const user = await User.findOne({ email });
     
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'User not found' });
     }
 
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Password incorrect' });
     }
 
     const token = generateToken(user._id);
