@@ -1,21 +1,36 @@
+"use client"
+
 import { Search, Home, Users, BarChart3, Building2, Megaphone, User, Settings } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function Sidebar() {
+  const pathname = usePathname()
+
+  const navItems = [
+    { href: "/p1/dashboard", label: "Dashboard", icon: Home },
+    { href: "/p1/companies", label: "Our Clients", icon: Users },
+    { href: "/p1/statements", label: "YTD Statements & Reports", icon: BarChart3 },
+    { href: "/p1/department", label: "Department Manager", icon: Building2 },
+    { href: "/p1/announcements", label: "Staff Announcements", icon: Megaphone },
+    { href: "/p1/profile", label: "My Profile", icon: User },
+    { href: "/p1/settings", label: "Settings & Preferences", icon: Settings },
+  ]
+
   return (
-    <div className="w-64 bg-white shadow-sm border-r">
+    <div className="w-64 bg-white shadow-sm">
       {/* Logo */}
       <div className="p-6">
-       
-         <div className="relative h-12 w-48 transition-transform duration-300 hover:scale-105">
-                      <Image
-                        src="/images/firstLogo.png"
-                        alt="Company Logo"
-                        fill
-                        className="object-contain"
-                        priority
-                      />
-                    </div>
+        <div className="relative h-42 w-52 transition-transform duration-300 hover:scale-105">
+          <Image
+            src="/images/firstLogo.png"
+            alt="Company Logo"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
       </div>
 
       {/* Search */}
@@ -31,35 +46,24 @@ export default function Sidebar() {
 
       {/* Navigation */}
       <nav className="px-3">
-        <div className="space-y-1">
-          <div className="flex items-center gap-3 px-3 py-2 bg-green-600 text-white rounded-lg">
-            <Home className="w-4 h-4" />
-            <span className="text-sm font-medium">Dashboard</span>
-          </div>
-          <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
-            <Users className="w-4 h-4" />
-            <span className="text-sm">Our Clients</span>
-          </div>
-          <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
-            <BarChart3 className="w-4 h-4" />
-            <span className="text-sm">YTD Statements & Reports</span>
-          </div>
-          <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
-            <Building2 className="w-4 h-4" />
-            <span className="text-sm">Department Manager</span>
-          </div>
-          <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
-            <Megaphone className="w-4 h-4" />
-            <span className="text-sm">Staff Announcements</span>
-          </div>
-          <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
-            <User className="w-4 h-4" />
-            <span className="text-sm">My Profile</span>
-          </div>
-          <div className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
-            <Settings className="w-4 h-4" />
-            <span className="text-sm">Settings & Preferences</span>
-          </div>
+        <div className="space-y-1 ">
+          {navItems.map(({ href, label, icon: Icon }) => {
+            const active = pathname === href
+            return (
+              <Link key={href} href={href}>
+                <div
+                  className={`flex m-1 items-center gap-4 px-3 py-2 rounded-lg cursor-pointer transition ${
+                    active
+                      ? "bg-green-600 text-white"
+                      : "text-gray-600 hover:bg-green-400 hover:text-white"
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="text-sm font-medium">{label}</span>
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </nav>
     </div>

@@ -21,7 +21,7 @@ const Companies = () => {
         <span className="text-base sm:text-lg font-semibold text-gray-600">
           Company List
         </span>
-        <button className="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition w-full sm:w-auto">
+        <button className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition w-full sm:w-auto">
           + Add Company
         </button>
       </div>
@@ -30,7 +30,7 @@ const Companies = () => {
       <div className="overflow-x-auto rounded-xl shadow">
         <table className="min-w-full border-collapse bg-white text-sm sm:text-base">
           <thead>
-            <tr className="bg-amber-600 text-white text-left">
+            <tr className="bg-green-500 text-white text-left">
               <th className="px-3 sm:px-4 py-2">No</th>
               <th className="px-3 sm:px-4 py-2">Name</th>
               <th className="px-3 sm:px-4 py-2">State</th>
@@ -42,7 +42,7 @@ const Companies = () => {
             {companies.map((company, index) => (
               <tr
                 key={company.id}
-                className="border-amber-300 text-gray-800 hover:bg-amber-50 transition"
+                className="border-green-300 text-gray-800 hover:bg-green-100 transition"
               >
                 <td className="px-3 sm:px-4 py-2">{index + 1}</td>
                 <td className="px-3 sm:px-4 py-2">{company.name}</td>
