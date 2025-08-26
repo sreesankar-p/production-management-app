@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 
 const Companies = () => {
   // Dummy data (later replace with API fetch)
@@ -23,7 +23,7 @@ const Companies = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const res = await axios.get("/api/companies")
+        const res = await axios.get("/api/products")
         setCompanies(res.data)
       } catch (error) {
         console.error(error)
@@ -42,11 +42,44 @@ const Companies = () => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/products", form)
+      // ✅ Success alert
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Company registered successfully 🎉",
+      });
+
       setCompanies([...companies, res.data]) //update list
       setIsModalOpen(false)
       setForm({ registeredId: "", name: "", gstNumber: "" })
     } catch (error) {
       console.error(error)
+      // For Axios errors, response might exist
+      let errorMessage = "Something went wrong!";
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          // Handle multiple errors or single message
+          if (error.response.data.errors) {
+            errorMessage = error.response.data.errors.join("\n");
+          } else {
+            errorMessage =
+              error.response.data.message || error.response.statusText;
+          }
+        } else if (error.request) {
+          errorMessage = "No response from server!";
+        } else {
+          errorMessage = error.message;
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: errorMessage,
+
+      });
     }
   }
 
@@ -149,7 +182,7 @@ const Companies = () => {
               <div className="flex justify-end gap-3">
                 <button
                   type="button"
-                  
+
                   onClick={() => setIsModalOpen(false)}
                   className="px-4 py-2 border rounded cursor-pointer"
                 >

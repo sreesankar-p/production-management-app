@@ -28,10 +28,32 @@ export default async function handler(
                 return res.status(200).json(companies);
 
             case 'POST':
+
+                const { registeredId, name, gstNumber } = req.body
+
+                // Find if any company already has the same registeredId or gstNumber
+                const existingCompanies = await Company.find({
+                    $or: [{ registeredId }, { gstNumber }]
+                })
+
+                if (existingCompanies.length > 0) {
+                    const errors: string[] = [];
+                    for (const comp of existingCompanies) {
+                        if (comp.registeredId === registeredId && comp.gstNumber === gstNumber) {
+                            errors.push("Registered ID and GST Number are already exists");
+                        } else if (comp.registeredId === registeredId && comp.gstNumber !== gstNumber) {
+                            errors.push("Registered ID already exists");
+                        } else if (comp.gstNumber === gstNumber && comp.registeredId !== registeredId) {
+                            errors.push("GST Number already exists");
+                        }
+                    }
+                    return res.status(400).json({ errors });
+                }
+
                 const company = await Company.create({
-                   registeredId: req.body.registeredId,
-                    name: req.body.name,
-                    gstNumber: req.body.gstNumber,
+                    registeredId,
+                    name,
+                    gstNumber,
                     createdBy: decoded.id
                 });
                 return res.status(201).json(company);
