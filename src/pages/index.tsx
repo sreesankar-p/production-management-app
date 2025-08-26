@@ -4,16 +4,19 @@ import type { RootState } from '@/lib/store';
 import Navbar from '@/components/Navbar';
 
 export default function HomePage() {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
-  if (!isAuthenticated) return null;
+
 
   return (
-      <>
+    <>
       <Navbar />
       <main className="container min-h-screen mx-auto px-4 py-16 bg-gray-50">
         <div className="flex flex-col justify-center text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            {isAuthenticated &&
+              <p>Hi, <span className=' bg-gradient-to-r from-purple-600 to-green-500 bg-clip-text text-transparent'> {user?.name}</span></p>
+            }
             Welcome to Shree Green Consultants
           </h1>
           <p className="text-xl text-gray-600 mb-8">

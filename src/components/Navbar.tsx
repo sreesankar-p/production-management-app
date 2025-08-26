@@ -17,16 +17,13 @@ export function Navbar() {
 
   console.log("Redux auth state:", { isAuthenticated, user });
 
-  // const userData = localStorage.getItem("auth")
-  // console.log("user Data name : ",userData)
-  // console.log("userrr", user?.name)
-  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
 
   const handleLogout = () => {
     try {
       document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
       dispatch(logoutUser());
-      router.push('/auth/login');
+      router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);
     }

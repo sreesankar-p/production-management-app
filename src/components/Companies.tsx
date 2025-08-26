@@ -1,13 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
+import axios from "axios";
+
 
 const Companies = () => {
   // Dummy data (later replace with API fetch)
-  const companies = [
-    { id: 1, name: "TechCorp", state: "Kerala", country: "India" },
-    { id: 2, name: "InnoSoft", state: "Karnataka", country: "India" },
-    { id: 3, name: "GlobalSolutions", state: "California", country: "USA" },
-  ];
+  // const companies = [
+  //   { id: 1, name: "TechCorp", state: "Kerala", country: "India" },
+  //   { id: 2, name: "InnoSoft", state: "Karnataka", country: "India" },
+  //   { id: 3, name: "GlobalSolutions", state: "California", country: "USA" },
+  // ];
+
+  const [companies, setCompanies] = useState<any[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form, setForm] = useState({
+    registeredId: "",
+    name: "",
+    gstNumber: ""
+  });
+
+  // Fetch companies
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const res = await axios.get("/api/companies")
+        setCompanies(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchCompanies();
+  }, [])
+
+  // Handle form input
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  // Submit new company
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/api/products", form)
+      setCompanies([...companies, res.data]) //update list
+      setIsModalOpen(false)
+      setForm({ registeredId: "", name: "", gstNumber: "" })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
 
   return (
     <div className="p-4 sm:p-6 lg:p-10">
@@ -17,11 +59,20 @@ const Companies = () => {
       </h1>
 
       {/* Header with Add Button */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
-        <span className="text-base sm:text-lg font-semibold text-gray-600">
+      {/* <div className="flex flex-col sm:flex-row justify-end items-end sm:items-center mb-4 gap-3"> */}
+      {/* <span className="text-base sm:text-lg font-semibold text-gray-600">
           Company List
-        </span>
-        <button className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition w-full sm:w-auto">
+        </span> */}
+      {/* <button className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition w-full sm:w-auto">
+          + Add Company
+        </button> */}
+      {/* </div> */}
+      {/* Header with Add Button */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition"
+        >
           + Add Company
         </button>
       </div>
@@ -32,22 +83,22 @@ const Companies = () => {
           <thead>
             <tr className="bg-green-500 text-white text-left">
               <th className="px-3 sm:px-4 py-2">No</th>
-              <th className="px-3 sm:px-4 py-2">Name</th>
-              <th className="px-3 sm:px-4 py-2">State</th>
-              <th className="px-3 sm:px-4 py-2">Country</th>
+              <th className="px-3 sm:px-4 py-2">Registerd Id</th>
+              <th className="px-3 sm:px-4 py-2">Company Name</th>
+              <th className="px-3 sm:px-4 py-2">Gst Number</th>
               <th className="px-3 sm:px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {companies.map((company, index) => (
               <tr
-                key={company.id}
+                key={company._id}
                 className="border-green-300 text-gray-800 hover:bg-green-100 transition"
               >
                 <td className="px-3 sm:px-4 py-2">{index + 1}</td>
+                <td className="px-3 sm:px-4 py-2">{company.registeredId}</td>
                 <td className="px-3 sm:px-4 py-2">{company.name}</td>
-                <td className="px-3 sm:px-4 py-2">{company.state}</td>
-                <td className="px-3 sm:px-4 py-2">{company.country}</td>
+                <td className="px-3 sm:px-4 py-2">{company.gstNumber}</td>
                 <td className="px-3 sm:px-4 py-2 flex gap-3">
                   <button className="text-blue-600 hover:text-blue-800 transition">
                     <Pencil size={18} />
@@ -61,6 +112,60 @@ const Companies = () => {
           </tbody>
         </table>
       </div>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[1px] bg-opacity-50">
+          <div className="bg-emerald-200  shadow-emerald-500/50 p-6 rounded-xl shadow-lg w-150 text-gray-600 ">
+            <h2 className="text-lg font-bold mb-4">Add Company</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="Number"
+                min="1000"
+                name="registeredId"
+                value={form.registeredId}
+                onChange={handleChange}
+                placeholder="Registered Id"
+                className="w-full border px-3 py-2 rounded"
+                required
+              />
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Company Name"
+                className="w-full border px-3 py-2 rounded"
+                required
+              />
+              <input
+                type="text"
+                name="gstNumber"
+                value={form.gstNumber}
+                onChange={handleChange}
+                placeholder="GST Number"
+                className="w-full border px-3 py-2 rounded"
+                required
+              />
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 border rounded cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

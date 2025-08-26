@@ -13,9 +13,9 @@ export default async function handler(
     if (!token) {
         return res.status(401).json({ message: 'Not authenticated' });
     }
-
+    let decoded: any;
     try {
-        await verifyToken(token);
+        decoded = verifyToken(token);
     } catch (error) {
         console.error(error)
         return res.status(401).json({ message: 'Not authenticated' });
@@ -28,10 +28,11 @@ export default async function handler(
                 return res.status(200).json(companies);
 
             case 'POST':
-                const { id } = verifyToken(token) as { id: string };
                 const company = await Company.create({
+                   registeredId: req.body.registeredId,
                     name: req.body.name,
-                    createdBy: id
+                    gstNumber: req.body.gstNumber,
+                    createdBy: decoded.id
                 });
                 return res.status(201).json(company);
 
