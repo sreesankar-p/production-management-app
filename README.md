@@ -27,7 +27,7 @@ A modern, responsive web application for managing production workflows, companie
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/production-manager.git
+   git clone https://github.com/sreesankar-p/production-manager.git
    cd production-manager
 
    ```
