@@ -73,7 +73,7 @@ const Companies = () => {
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }
-      
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -111,93 +111,94 @@ const Companies = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl shadow">
-        <table className="min-w-full border-collapse bg-white text-sm sm:text-base">
-          <thead>
-            <tr className="bg-green-500 text-white text-left">
-              <th className="px-3 sm:px-4 py-2">No</th>
-              <th className="px-3 sm:px-4 py-2">Registerd Id</th>
-              <th className="px-3 sm:px-4 py-2">Company Name</th>
-              <th className="px-3 sm:px-4 py-2">Gst Number</th>
-              <th className="px-3 sm:px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {companies.map((company, index) => (
-              <tr
-                key={company._id}
-                className="border-green-300 text-gray-800 hover:bg-green-100 transition"
-              >
-                <td className="px-3 sm:px-4 py-2">{index + 1}</td>
-                <td className="px-3 sm:px-4 py-2">{company.registeredId}</td>
-                <td className="px-3 sm:px-4 py-2">{company.name}</td>
-                <td className="px-3 sm:px-4 py-2">{company.gstNumber}</td>
-                <td className="px-3 sm:px-4 py-2 flex gap-3">
-                  <button className="text-blue-600 hover:text-blue-800 transition">
-                    <Pencil size={18} />
-                  </button>
-                  <button className="text-red-600 hover:text-red-800 transition">
-                    <Trash2 size={18} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+     <div className="overflow-x-auto rounded-xl shadow">
+  <table className="min-w-full border-collapse bg-white text-xs sm:text-sm lg:text-base">
+    <thead>
+      <tr className="bg-green-500 text-white text-left">
+        <th className="px-2 sm:px-4 py-2">No</th>
+        <th className="px-2 sm:px-4 py-2">Registerd Id</th>
+        <th className="px-2 sm:px-4 py-2">Company Name</th>
+        <th className="px-2 sm:px-4 py-2">Gst Number</th>
+        <th className="px-2 sm:px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {companies.map((company, index) => (
+        <tr
+          key={company._id}
+          className="border-green-300 text-gray-800 hover:bg-green-100 transition"
+        >
+          <td className="px-2 sm:px-4 py-2">{index + 1}</td>
+          <td className="px-2 sm:px-4 py-2">{company.registeredId}</td>
+          <td className="px-2 sm:px-4 py-2">{company.name}</td>
+          <td className="px-2 sm:px-4 py-2">{company.gstNumber}</td>
+          <td className="px-2 sm:px-4 py-2 flex gap-2 sm:gap-3">
+            <button className="text-blue-600 hover:text-blue-800 transition">
+              <Pencil size={16} className="sm:w-5 sm:h-5" />
+            </button>
+            <button className="text-red-600 hover:text-red-800 transition">
+              <Trash2 size={16} className="sm:w-5 sm:h-5" />
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[1px] bg-opacity-50">
-          <div className="bg-emerald-200  shadow-emerald-500/50 p-6 rounded-xl shadow-lg w-150 text-gray-600 ">
-            <h2 className="text-lg font-bold mb-4">Add Company</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="Number"
-                min="1000"
-                name="registeredId"
-                value={form.registeredId}
-                onChange={handleChange}
-                placeholder="Registered Id"
-                className="w-full border px-3 py-2 rounded"
-                required
-              />
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Company Name"
-                className="w-full border px-3 py-2 rounded"
-                required
-              />
-              <input
-                type="text"
-                name="gstNumber"
-                value={form.gstNumber}
-                onChange={handleChange}
-                placeholder="GST Number"
-                className="w-full border px-3 py-2 rounded"
-                required
-              />
-              <div className="flex justify-end gap-3">
-                <button
-                  type="button"
+       <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[1px] bg-black/30 px-4">
+  <div className="bg-emerald-200 shadow-emerald-500/50 p-6 rounded-xl shadow-lg w-full max-w-md sm:max-w-lg text-gray-600">
+    <h2 className="text-lg font-bold mb-4">Add Company</h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input
+        type="number"
+        min="1000"
+        name="registeredId"
+        value={form.registeredId}
+        onChange={handleChange}
+        placeholder="Registered Id"
+        className="w-full border px-3 py-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        placeholder="Company Name"
+        className="w-full border px-3 py-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        name="gstNumber"
+        value={form.gstNumber}
+        onChange={handleChange}
+        placeholder="GST Number"
+        className="w-full border px-3 py-2 rounded"
+        required
+      />
+      <div className="flex justify-end gap-2 sm:gap-3">
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(false)}
+          className="px-3 sm:px-4 py-2 border rounded cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="bg-green-600 cursor-pointer text-white px-3 sm:px-4 py-2 rounded"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 border rounded cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded"
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       )}
     </div>
   );
